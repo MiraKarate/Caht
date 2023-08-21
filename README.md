@@ -1,10 +1,6 @@
 # React Native Mobile Chat App
 
-## Objective  
-
-This README provides an overview of the mobile chat app project developed using React Native, Expo, and Google Firestore Database. The app is designed to facilitate real-time communication between users and includes various features to enhance user experience.
-
-To build a chat app for mobile devices using React Native. The app provides users with a chat interface and options to share images and their
+This README provides an overview of the mobile chat app project developed using React Native, Expo, and Google Firestore Database. The app is designed to facilitate real-time communication between users and includes various features to enhance user experience. The app provides users with a chat interface and options to share images and their
 location.  
 
 ## Introduction
