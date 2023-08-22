@@ -23,6 +23,12 @@ const ChatScreen = ({ route, navigation }) => {
                     avatar: "https://placeimg.com/140/140/any",
                 },
             },
+            {
+                _id: 2,
+                text: 'This is a system message',
+                createdAt: new Date(),
+                system: true,
+            },
         ]);
     }, []);
 
@@ -33,7 +39,7 @@ const ChatScreen = ({ route, navigation }) => {
     }, []);
 
     return (
-        <View style={[styles.container, { backgroundColor }]}>
+        <View >
             <GiftedChat
                 messages={messages}
                 onSend={messages => onSend(messages)}
@@ -42,6 +48,7 @@ const ChatScreen = ({ route, navigation }) => {
                 }}
             />
             {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
+            {Platform.OS === "ios" ? <KeyboardAvoidingView behavior="padding" /> : null}
         </View>
     )
 
@@ -51,9 +58,8 @@ const ChatScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        flex: 1
+
     }
 });
 
