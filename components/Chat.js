@@ -1,8 +1,31 @@
-import { useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { useState, useEffect } from "react";
+import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import { GiftedChat } from "react-native-gifted-chat";
+
+
 
 const ChatScreen = ({ route, navigation }) => {
     const { name, backgroundColor } = route.params;
+    const [messages, setMessages] = useState([]);
+    const onSend = (newMessages) => {
+        setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
+    }
+
+    useEffect(() => {
+        setMessages([
+            {
+                _id: 1,
+                text: "Hello developer",
+                createdAt: new Date(),
+                user: {
+                    _id: 2,
+                    name: "React Native",
+                    avatar: "https://placeimg.com/140/140/any",
+                },
+            },
+        ]);
+    }, []);
+
 
     useEffect(() => {
         navigation.setOptions({ title: name });
@@ -10,11 +33,21 @@ const ChatScreen = ({ route, navigation }) => {
     }, []);
 
     return (
-        <View style={[styles.container, { backgroundColor }]} >
-            <Text>Hello {name}!</Text>
-        </View >
-    );
+        <View style={[styles.container, { backgroundColor }]}>
+            <GiftedChat
+                messages={messages}
+                onSend={messages => onSend(messages)}
+                user={{
+                    _id: 1
+                }}
+            />
+            {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
+        </View>
+    )
+
 }
+
+
 
 const styles = StyleSheet.create({
     container: {
