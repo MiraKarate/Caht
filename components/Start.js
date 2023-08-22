@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native';
 
 const StartScreen = ({ navigation }) => {
     const [name, setName] = useState('');
@@ -59,6 +59,8 @@ const StartScreen = ({ navigation }) => {
                     </TouchableOpacity>
 
                 </View>
+                {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
+                {Platform.OS === 'ios' ? <KeyboardAvoidingView behavior="padding" /> : null}
             </View>
         </ImageBackground>
     );

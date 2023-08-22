@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Platform, KeyboardAvoidingView } from 'react-native';
-import { GiftedChat } from "react-native-gifted-chat";
+import { Bubble, GiftedChat } from "react-native-gifted-chat";
 
 const ChatScreen = ({ route, navigation }) => {
     const { name, backgroundColor } = route.params;
     const [messages, setMessages] = useState([]);
-
-    const onSend = (newMessages) => {
-        setMessages(previousMessages =>
-            GiftedChat.append(previousMessages, newMessages)
-        );
-    };
 
     useEffect(() => {
         setMessages([
@@ -33,30 +27,44 @@ const ChatScreen = ({ route, navigation }) => {
         ]);
     }, []);
 
+    const onSend = (newMessages) => {
+        setMessages(previousMessages =>
+            GiftedChat.append(previousMessages, newMessages)
+        );
+    };
+
+
+    const renderBubble = (props) => {
+        return <Bubble
+            {...props}
+            wrapperStyle={{
+                right: {
+                    backgroundColor: "#000"
+                },
+                left: {
+                    backgroundColor: "#FFF"
+                }
+            }}
+        />
+    }
+
     useEffect(() => {
         navigation.setOptions({ title: name });
         navigation.setOptions({ headerStyle: { backgroundColor } });
     }, []);
 
     return (
-        <View style={styles.container}>
-            <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                style={{ flex: 1 }}
-                keyboardVerticalOffset={
-                    Platform.OS === "ios" ? 0 : 25 // Adjust this value as needed
-                }
-            >
-                <GiftedChat
-                    messages={messages}
-                    onSend={messages => onSend(messages)}
-                    user={{
-                        _id: 1,
-                    }}
-                />
-            </KeyboardAvoidingView>
-            {Platform.OS === "ios" ? <KeyboardAvoidingView behavior="padding" /> : null}
-            {Platform.OS === "android" ? <KeyboardAvoidingView behavior="height" /> : null}
+        <View style={[styles.container, { backgroundColor: color }]}>
+            <GiftedChat
+                messages={messages}
+                renderBubble={renderBubble}
+                onSend={messages => onSend(messages)}
+                user={{
+                    _id: 1,
+                }}
+            />
+            {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
+            {Platform.OS === 'ios' ? <KeyboardAvoidingView behavior="padding" /> : null}
         </View>
     );
 };
