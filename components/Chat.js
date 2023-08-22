@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
-import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Platform, KeyboardAvoidingView } from 'react-native';
 import { GiftedChat } from "react-native-gifted-chat";
-
-
 
 const ChatScreen = ({ route, navigation }) => {
     const { name, backgroundColor } = route.params;
     const [messages, setMessages] = useState([]);
+
     const onSend = (newMessages) => {
-        setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
-    }
+        setMessages(previousMessages =>
+            GiftedChat.append(previousMessages, newMessages)
+        );
+    };
 
     useEffect(() => {
         setMessages([
@@ -32,35 +33,38 @@ const ChatScreen = ({ route, navigation }) => {
         ]);
     }, []);
 
-
     useEffect(() => {
         navigation.setOptions({ title: name });
         navigation.setOptions({ headerStyle: { backgroundColor } });
     }, []);
 
     return (
-        <View >
-            <GiftedChat
-                messages={messages}
-                onSend={messages => onSend(messages)}
-                user={{
-                    _id: 1
-                }}
-            />
-            {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
+        <View style={styles.container}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={{ flex: 1 }}
+                keyboardVerticalOffset={
+                    Platform.OS === "ios" ? 0 : 25 // Adjust this value as needed
+                }
+            >
+                <GiftedChat
+                    messages={messages}
+                    onSend={messages => onSend(messages)}
+                    user={{
+                        _id: 1,
+                    }}
+                />
+            </KeyboardAvoidingView>
             {Platform.OS === "ios" ? <KeyboardAvoidingView behavior="padding" /> : null}
+            {Platform.OS === "android" ? <KeyboardAvoidingView behavior="height" /> : null}
         </View>
-    )
-
-}
-
-
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
-
-    }
+        flex: 1,
+    },
 });
 
 export default ChatScreen;
