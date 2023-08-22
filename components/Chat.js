@@ -54,7 +54,7 @@ const ChatScreen = ({ route, navigation }) => {
     }, []);
 
     return (
-        <View style={[styles.container, { backgroundColor: color }]}>
+        <View style={[styles.container, { backgroundColor: backgroundColor }]}>
             <GiftedChat
                 messages={messages}
                 renderBubble={renderBubble}
