@@ -21,7 +21,6 @@ const StartScreen = ({ navigation }) => {
                             style={styles.imageStyle}
                         />
                         <TextInput
-
                             style={styles.textInput}
                             value={name}
                             onChangeText={setName}
@@ -103,6 +102,9 @@ const styles = StyleSheet.create({
         width: "88%",
         marginTop: 15,
         marginBottom: 15,
+        borderWidth: 2,
+        borderColor: '#757083',
+        borderRadius: 3,
     },
     imageStyle: {
         padding: 10,
@@ -115,13 +117,10 @@ const styles = StyleSheet.create({
     textInput: {
         width: '88%',
         padding: 15,
-        borderWidth: 2,
         color: '#757083',
         fontSize: 16,
         fontWeight: '300',
         opacity: 0.5,
-        borderColor: '#757083',
-        borderRadius: 3,
         height: 50,
         marginLeft: 'auto',
         marginRight: 'auto',
