@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNetInfo } from '@react-native-community/netinfo';
 import { initializeApp } from "firebase/app";
 import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
 import { Alert } from "react-native";
-import { AsyncStorage } from 'react-native';
+import { getStorage } from "firebase/storage";
+import { Image } from 'react-native';
 
 // import the screens
 import StartScreen from './components/Start';
@@ -36,6 +37,7 @@ const App = () => {
 
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
+  const storage = getStorage(app);
 
   const connectionStatus = useNetInfo();// Get network information
 
@@ -61,8 +63,11 @@ const App = () => {
         />
         <Stack.Screen
           name="ChatScreen">
-          {props => <ChatScreen db={db} {...props}
-            isConnected={connectionStatus.isConnected} />}
+          {props => <ChatScreen
+            isConnected={connectionStatus.isConnected}
+            db={db}
+            storage={storage}
+            {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

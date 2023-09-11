@@ -4,9 +4,13 @@ import { StyleSheet, View, Platform, KeyboardAvoidingView, Alert } from 'react-n
 import { Bubble, GiftedChat, InputToolbar } from "react-native-gifted-chat";
 import { addDoc, collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomActions from './CustomActions';
+import MapView from 'react-native-maps';
+import { Image } from 'react-native';
 
 
-const ChatScreen = ({ route, navigation, db, isConnected, }) => {
+
+const ChatScreen = ({ route, navigation, db, isConnected, storage }) => {
     const { name, backgroundColor, userID } = route.params;
     const [messages, setMessages] = useState([]);
 
@@ -57,7 +61,24 @@ const ChatScreen = ({ route, navigation, db, isConnected, }) => {
 
     //Add new messages to the existing messages
     const onSend = (newMessages) => {
-        addDoc(collection(db, "messages"), newMessages[0])
+        const newMessage = newMessages[0];
+
+        // Prüfe, ob die Nachricht ein Bild enthält
+        if (newMessage.image) {
+            // Wenn ein Bild vorhanden ist, speichere die Bild-URL in der Nachricht
+            const { text, user, image } = newMessage;
+
+            // Füge die Bild-URL zur Datenbank hinzu
+            addDoc(collection(db, "messages"), {
+                text,
+                createdAt: new Date(),
+                user,
+                image, // Speichere die Bild-URL hier
+            });
+        } else {
+            // Wenn keine Bild-URL vorhanden ist, füge die Nachricht wie gewohnt hinzu
+            addDoc(collection(db, "messages"), newMessage);
+        }
     }
 
 
@@ -75,10 +96,39 @@ const ChatScreen = ({ route, navigation, db, isConnected, }) => {
         />
     }
 
+
+
     useEffect(() => {
         navigation.setOptions({ title: name }); //Setting the title to 'name'
         navigation.setOptions({ headerStyle: { backgroundColor } }); //Setting the title backgroundcolor
     }, []);
+
+    const renderCustomActions = (props) => {
+        return <CustomActions userID={userID} storage={storage} {...props} />;
+    };
+
+    const renderCustomView = (props) => {
+        const { currentMessage } = props;
+        if (currentMessage.location) {
+            return (
+                <MapView
+                    style={{
+                        width: 150,
+                        height: 100,
+                        borderRadius: 13,
+                        margin: 3
+                    }}
+                    region={{
+                        latitude: currentMessage.location.latitude,
+                        longitude: currentMessage.location.longitude,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                />
+            );
+        }
+        return null;
+    }
 
     return (
         <View style={[styles.container, { backgroundColor: backgroundColor }]}>
@@ -87,13 +137,15 @@ const ChatScreen = ({ route, navigation, db, isConnected, }) => {
                 renderBubble={renderBubble}
                 renderInputToolbar={renderInputToolbar}
                 onSend={messages => onSend(messages)}
+                renderActions={renderCustomActions}
+                renderCustomView={renderCustomView}
                 user={{
                     _id: userID,
                     name: name
                 }}
             />
             {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
-            {Platform.OS === 'ios' ? <KeyboardAvoidingView behavior="padding" /> : null}
+
         </View>
     );
 };
