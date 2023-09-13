@@ -87,11 +87,11 @@ Before running the app, make sure to install the required dependencies using npm
 npm install @react-native-async-storage/async-storage @react-native-community/netinfo @react-navigation/native @react-navigation/native-stack expo firebase react-native react-native-gifted-chat react-native-safe-area-context react-native-screens expo-image-picker expo-location react-native-maps
 ```
 
-### Running the App
+## Running the App
 
 Now that you've set up the environment and Firebase, you can run the app:
 
-### 5.Start the Expo Development Server
+### 5. Start the Expo Development Server
 
 ```bash
 expo start
@@ -102,7 +102,7 @@ This command will start the Expo development server, and you can run the app on 
 + Use **expo start -c** to clear cache.  
 + Use **expo start --offline** for offline testing.  
 
-### Additional Requirements
+## Additional Requirements
 
 Ensure you have the following additional requirements:  
   
@@ -113,7 +113,7 @@ Ensure you have the following additional requirements:
 + Personal device (smartphone or tablet)
 
 
-### Project Setup
+## Project Setup
 
 ### 6. Clone the Repository  
 Clone the repository for your project.  
