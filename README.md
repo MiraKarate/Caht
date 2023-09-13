@@ -5,9 +5,9 @@ location.
 
 <img width="300" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 26 21" src="img/Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11.26.21.png">
 
-<img width="300" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 35" src="images/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202023-09-13%20at%2011.24.35.png">
+<img width="300" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 35" src="img/Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11.24.35.png">
 
-<img width="300" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 59" src="images/Simulator%20Screenshot%20-%20iPhone%20SE%20(3rd%20generation)%20-%202023-09-13%20at%2011.24.59.png">
+<img width="300" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 59" src="img/Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11.24.59.png">
 
 ## Introduction
 
