@@ -1,7 +1,7 @@
 # React Native Mobile Chat App
 
-This README provides an overview of the mobile chat app project developed using React Native, Expo, and Google Firestore Database. The app is designed to facilitate real-time communication between users and includes various features to enhance user experience. The app provides users with a chat interface and options to share images and their
-location. 
+This README provides an overview of the mobile chat app project developed using React Native, Expo, and Google Firestore Database. The app is designed to facilitate real-time communication between users and includes various features to enhance user experience. The app provides users with a chat interface and options to share images and their location.  <br>
+<br>
 
 <img width="300" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 26 21" src="img/Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11.26.21.png"> <img width="300" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 35" src="img/Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11.24.35.png"> <img width="300" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 59" src="img/Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11.24.59.png">
 
