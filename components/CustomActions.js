@@ -1,7 +1,15 @@
+// React and React Native imports
+import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet, Alert } from "react-native";
+
+// Expo libraries for image and location handling
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
+
+// Expo libraries for action sheet handling
 import { useActionSheet } from '@expo/react-native-action-sheet';
+
+// Firebase Storage imports for file storage
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userID }) => {
@@ -31,6 +39,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userID })
         );
     };
 
+    // Function to request permission to access the user's media library and send images if permission is granted.
     const pickImage = async () => {
         let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (permissions?.granted) {
@@ -40,6 +49,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userID })
         }
     }
 
+    //Requests permission to use the devices camera and allow it to be added to the chat 
     const takePhoto = async () => {
         let permissions = await ImagePicker.requestCameraPermissionsAsync();
         if (permissions?.granted) {
@@ -49,6 +59,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userID })
         }
     }
 
+    // Function to request permission to use the device's camera and send a photo if permission is granted.
     const getLocation = async () => {
         let permissions = await Location.requestForegroundPermissionsAsync();
         if (permissions?.granted) {
@@ -64,6 +75,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userID })
         } else Alert.alert("Permissions haven't been granted.");
     }
 
+    // Function to generate a unique reference for an uploaded image.
     const generateReference = (uri) => {
         // this will get the file name from the uri
         const imageName = uri.split("/")[uri.split("/").length - 1];
@@ -71,8 +83,9 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userID })
         return `${userID}-${timeStamp}-${imageName}`;
     }
 
+    // Function to convert a file (image) to a blob.
+    // XHR required as react native no longer supports the fetch() in the blob conversion
 
-    //XHR required as react native no longer supports the fetch() in the blob conversion
     const convertFileToBlob = async (uri) => {
         return new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();

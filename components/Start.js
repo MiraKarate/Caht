@@ -1,5 +1,8 @@
-import { useState } from 'react';
+// React and React Native imports
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+
+// Firebase Authentication imports
 import { getAuth, signInAnonymously } from "firebase/auth";
 
 const StartScreen = ({ navigation, db }) => {
@@ -8,6 +11,7 @@ const StartScreen = ({ navigation, db }) => {
 
     const auth = getAuth();
 
+    // Function to sign in an anonymous user and navigate to the chat screen.
     const signInUser = () => {
         signInAnonymously(auth)
             .then(result => {
@@ -19,19 +23,20 @@ const StartScreen = ({ navigation, db }) => {
             })
     }
 
+    // Render the background image for the start screen
     return (
         <ImageBackground source={require('../img/background-image.png')} resizeMode="cover" style={styles.background}>
             <View style={styles.container}>
-                {/* Rendering the title of the App \*/}
+                {/* Render the title of the App */}
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>Chat App</Text>
                 </View>
-                {/* Rendering the Menu \*/}
+                {/* Render the main menu */}
                 <View style={styles.menu}>
-                    {/* Rendering Textinput incl. Image \*/}
+                    {/* Render the input field with an image */}
                     <View style={styles.inputField}>
                         <Image
-                            source={require('../img/your-name.png')}  // Hier den Pfad zu dem Bild angeben
+                            source={require('../img/your-name.png')} // Specify the path to the image here
                             style={styles.imageStyle}
                         />
                         <TextInput
@@ -41,10 +46,11 @@ const StartScreen = ({ navigation, db }) => {
                             placeholder='Your Name'
                         />
                     </View>
-                    {/* Rendering custom color possibility for chat view \*/}
+                    {/* Render custom color options for the chat view */}
                     <View style={styles.chooseColorContainer}>
                         <Text style={[styles.chooseColor]}>Choose Background Color:</Text>
                         <View style={styles.colorContainer}>
+                            {/* Render color selection circles */}
                             <TouchableOpacity
                                 style={[styles.circle, styles.black]}
                                 onPress={() => { setBackgroundColor('#090C08') }}
@@ -63,7 +69,7 @@ const StartScreen = ({ navigation, db }) => {
                             ></TouchableOpacity>
                         </View>
                     </View>
-                    {/* Rendering button to navigate to 'Chat View' \*/}
+                    {/* Render a button to navigate to the 'Chat View' */}
                     <TouchableOpacity
                         style={styles.button}
                         onPress={signInUser}
@@ -71,6 +77,7 @@ const StartScreen = ({ navigation, db }) => {
                         <Text style={styles.buttonText}>Start Chatting</Text>
                     </TouchableOpacity>
                 </View>
+                {/* Adjust the keyboard behavior for Android and iOS */}
                 {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
                 {Platform.OS === 'ios' ? <KeyboardAvoidingView behavior="padding" /> : null}
             </View>
