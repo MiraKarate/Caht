@@ -50,7 +50,7 @@ npm install -g expo-cli
 
 ### 2. Android Studio:   
 
-If you plan to run the app on an Android emulator, follow the official Expo guide to set up the Android development environment: Expo Android Development Environment.
+If you plan to run the app on an Android emulator, follow the official Expo guide to set up the Android development environment: [Expo Android Development Environment.](https://docs.expo.dev/workflow/android-studio-emulator/)
 
 ## Database Configuration  
 
