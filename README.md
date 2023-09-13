@@ -63,8 +63,6 @@ If you plan to run the app on an Android emulator, follow the official Expo guid
 3. Obtain the Firebase configuration object for your project. It should look something like this:
    
 ```bash
-javascript
-Copy code
 const firebaseConfig = {
   apiKey: 'YOUR_API_KEY',
   authDomain: 'YOUR_AUTH_DOMAIN',
