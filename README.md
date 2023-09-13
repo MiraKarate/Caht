@@ -61,20 +61,23 @@ Set up an Expo account and ensure you have Expo CLI installed globally:
 
 ```bash
 npm install -g expo-cli
+```
 
+### 2. Android Studio:   
 
-Android Studio: If you plan to run the app on an Android emulator, set up Android Studio. Follow the official Expo guide for instructions on setting up the Android development environment: Expo Android Development Environment.
+If you plan to run the app on an Android emulator, follow the official Expo guide to set up the Android development environment: Expo Android Development Environment.
 
-Database Configuration:
+## Database Configuration  
 
-This app uses Firebase as the backend database. To configure Firebase:
+### 3. Firebase Setup 
 
-Visit the Firebase Console and create a new project if you don't have one already. In the "Rules" tab, change "allow read, write: if false;" to "allow read, write: if true;"
+1. Visit the Firebase Console and create a new project if you don't have one already. In the "Rules" tab, change "allow read, write: if false;" to "allow read, write: if true;"  
 
-Set up Firebase Authentication (Anonymous Authentication is used in this app) and Firestore Database. Make sure to enable anonymous authentication in Firebase.
+2. Set up Firebase Authentication (Anonymous Authentication is used in this app) and Firestore Database. Make sure to enable anonymous authentication in Firebase.  
 
-Obtain the Firebase configuration object for your project. It should look something like this:
-
+3. Obtain the Firebase configuration object for your project. It should look something like this:
+   
+```bash
 javascript
 Copy code
 const firebaseConfig = {
@@ -86,66 +89,84 @@ const firebaseConfig = {
   appId: 'YOUR_APP_ID',
   measurementId: 'YOUR_MEASUREMENT_ID',
 };
-In the App.js file of your project, replace the firebaseConfig object with your own Firebase configuration.
+```  
+4. In the **App.js** file of your project, replace the **firebaseConfig** object with your own Firebase configuration.
 
-Necessary Libraries to Install:
+## Necessary Libraries to Install
 
-Before running the app, make sure to install the required dependencies using npm or yarn. Note that Expo supports Node up to version 16.19.0, so ensure you are using this version:
+Before running the app, make sure to install the required dependencies using npm or yarn. Ensure you are using Node.js version 16.19.0:
 
-Install the necessary libraries:
-bash
-Copy code
+### 4. Install Dependencies  
+  
+```bash
 npm install @react-native-async-storage/async-storage @react-native-community/netinfo @react-navigation/native @react-navigation/native-stack expo firebase react-native react-native-gifted-chat react-native-safe-area-context react-native-screens expo-image-picker expo-location react-native-maps
-Running the App:
+```
+
+### Running the App
 
 Now that you've set up the environment and Firebase, you can run the app:
 
-Start the Expo development server:
+### 5.Start the Expo Development Server
 
-bash
-Copy code
+```bash
 expo start
+```
+
 This command will start the Expo development server, and you can run the app on an emulator or a physical device.
 
-Use expo start -c to clear cache.
-Use expo start --offline for offline testing.
-Additional Requirements:
++ Use **expo start -c** to clear cache.  
++ Use **expo start --offline** for offline testing.  
 
-Ensure you have the following additional requirements:
-Node.js
-Firebase Account
-Expo
-Mobile OS Emulator (Android Studio)
-Personal device (smartphone or tablet)
-Project Setup:
+### Additional Requirements
 
-Clone the repository for your project.
+Ensure you have the following additional requirements:  
+  
++ Node.js
++ Firebase Account
++ Expo
++ Mobile OS Emulator (Android Studio)
++ Personal device (smartphone or tablet)
 
-Navigate to the project directory in the terminal.
+
+### Project Setup
+
+### 6. Clone the Repository  
+Clone the repository for your project.  
+
+### 7. Navigate to the Project Directory
+Navigate to the project directory in the terminal.  
+
+### 8. Install Dependencies
 
 Install the base dependencies:
 
-bash
-Copy code
+```bash
 npm install 16.19.0
 npm use 16.19.0
+```
+
 Install required packages:
 
-bash
-Copy code
+```bash
 npm i firebase
 npm i expo
 npm i whatwg-fetch@3.6.2
 expo install expo-av
-Sign up for Firebase and set up Firebase as per the Firebase setup instructions mentioned earlier.
+```
+### 9. Firebase Setup
+Sign up for Firebase and set up Firebase as per the Firebase setup instructions mentioned earlier.  
 
+### 10. Android Studio Setup
 Download and install Android Studio for Android emulator testing.
 
+### 11. Expo Setup
 Sign up for Expo and install Expo Go on your mobile devices for testing.
 
-In the terminal, run expo login and go through the login process.
-
-For future uses, use npx expo start in the terminal to start the development server.
+### 12. Expo Login
+In the terminal, run **expo login** and go through the login process.
+  
+### 13. Start Development Server
+For future uses, use **expo start** in the terminal to start the development server.
 
 
 
