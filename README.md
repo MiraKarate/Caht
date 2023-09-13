@@ -4,7 +4,7 @@ This README provides an overview of the mobile chat app project developed using 
 location. 
 
 
-<img width="300" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 26 21" src="[https://github.com/MiraKarate/Chat-app/assets/124045048/a08276ee-0ce6-4e66-bf20-3e2b8fdcefce]">
+<img width="300" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 26 21" src="">
 
 ![Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 26 21](https://github.com/MiraKarate/Chat-app/assets/124045048/a08276ee-0ce6-4e66-bf20-3e2b8fdcefce)  
 ![Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 59](https://github.com/MiraKarate/Chat-app/assets/124045048/66b5e388-fff8-4ec5-9835-114219ad1c25)
