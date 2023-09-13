@@ -2,6 +2,10 @@
 
 This README provides an overview of the mobile chat app project developed using React Native, Expo, and Google Firestore Database. The app is designed to facilitate real-time communication between users and includes various features to enhance user experience. The app provides users with a chat interface and options to share images and their
 location.  
+![Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 26 21](https://github.com/MiraKarate/Chat-app/assets/124045048/a08276ee-0ce6-4e66-bf20-3e2b8fdcefce)  
+![Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 59](https://github.com/MiraKarate/Chat-app/assets/124045048/66b5e388-fff8-4ec5-9835-114219ad1c25)
+![Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 35](https://github.com/MiraKarate/Chat-app/assets/124045048/ddc17507-0f43-4f0b-ba33-ae2121b2e28a)
+
 
 ## Introduction
 
@@ -46,4 +50,8 @@ and location data.
 + The app must be able to read the user’s location data.  
 + Location data must be sent via the chat in a map view.  
 + The chat interface and functionality must be created using the Gifted Chat library.  
-+ The app’s codebase must contain comments.   
++ The app’s codebase must contain comments.
+  
+## Set Up and Installation
+
+
