@@ -4,7 +4,6 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
 import { Alert } from "react-native";
 import { getStorage } from "firebase/storage";
-import { Image } from 'react-native';
 
 // import the screens
 import StartScreen from './components/Start';
@@ -20,6 +19,7 @@ import { StyleSheet } from 'react-native';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+ 
 
   // Your web app's Firebase configuration
   const firebaseConfig = {

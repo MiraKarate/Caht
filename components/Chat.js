@@ -1,84 +1,67 @@
-//Import
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Platform, KeyboardAvoidingView, Alert } from 'react-native';
+import { useState, useEffect } from "react";
+import { StyleSheet, View, Platform, KeyboardAvoidingView } from 'react-native';
 import { Bubble, GiftedChat, InputToolbar } from "react-native-gifted-chat";
-import { addDoc, collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import CustomActions from './CustomActions';
 import MapView from 'react-native-maps';
-import { Image } from 'react-native';
 
+import CustomActions from './CustomActions';
 
-
-const ChatScreen = ({ route, navigation, db, isConnected, storage }) => {
-    const { name, backgroundColor, userID } = route.params;
+const Chat = ({ db, storage, route, navigation, isConnected }) => {
     const [messages, setMessages] = useState([]);
+    const { name, backgroundColor, userID } = route.params;
 
     let unsubMessages;
 
     useEffect(() => {
+        navigation.setOptions({ title: name });
+        navigation.setOptions({ headerStyle: { backgroundColor } });
+
         if (isConnected === true) {
-            if (unsubMessages) unsubMessages()
-            unsubMessages = null
-            const q = query(collection(db, "messages"), orderBy("createdAt", "desc"))
-            unsubMessages = onSnapshot(q, (documentsSnapshot) => {
+
+            if (unsubMessages) unsubMessages();
+            unsubMessages = null;
+
+            const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+            unsubMessages = onSnapshot(q, (docs) => {
                 let newMessages = [];
-                documentsSnapshot.forEach((doc) => {
+                docs.forEach(doc => {
                     newMessages.push({
                         id: doc.id,
                         ...doc.data(),
                         createdAt: new Date(doc.data().createdAt.toMillis())
                     })
                 })
-                cachedMessages(newMessages)
-                setMessages(newMessages)
+                cacheMessages(newMessages);
+                setMessages(newMessages);
             })
         } else loadCachedMessages();
+
         return () => {
-            if (unsubMessages) unsubMessages()
+            if (unsubMessages) unsubMessages();
         }
-    }, [isConnected])
+    }, [isConnected]);
 
     const loadCachedMessages = async () => {
-        const cachedMessages = (await AsyncStorage.getItem('messages')) || []
-        setMessages(JSON.parse(cachedMessages))
+        const cachedMessages = await AsyncStorage.getItem("messages") || [];
+        setMessages(JSON.parse(cachedMessages));
     }
 
-
-    const cachedMessages = async (messagesToCache) => {
+    const cacheMessages = async (messagesToCache) => {
         try {
-            await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache))
+            await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache));
         } catch (error) {
-            console.log(error.message)
+            console.log(error.message);
         }
     }
 
-    //Render and input bar or a text depending on the network status
-    const renderInputToolbar = (props) => {
-        if (isConnected) return <InputToolbar {...props} />;
-        else return null;
-    }
-
-    //Add new messages to the existing messages
     const onSend = (newMessages) => {
-        const newMessage = newMessages[0];
+        addDoc(collection(db, "messages"), newMessages[0])
+    }
 
-        // Prüfe, ob die Nachricht ein Bild enthält
-        if (newMessage.image) {
-            // Wenn ein Bild vorhanden ist, speichere die Bild-URL in der Nachricht
-            const { text, user, image } = newMessage;
-
-            // Füge die Bild-URL zur Datenbank hinzu
-            addDoc(collection(db, "messages"), {
-                text,
-                createdAt: new Date(),
-                user,
-                image, // Speichere die Bild-URL hier
-            });
-        } else {
-            // Wenn keine Bild-URL vorhanden ist, füge die Nachricht wie gewohnt hinzu
-            addDoc(collection(db, "messages"), newMessage);
-        }
+    const renderInputToolbar = (props) => {
+        if (isConnected === true) return <InputToolbar {...props} />;
+        else return null;
     }
 
 
@@ -95,13 +78,6 @@ const ChatScreen = ({ route, navigation, db, isConnected, storage }) => {
             }}
         />
     }
-
-
-
-    useEffect(() => {
-        navigation.setOptions({ title: name }); //Setting the title to 'name'
-        navigation.setOptions({ headerStyle: { backgroundColor } }); //Setting the title backgroundcolor
-    }, []);
 
     const renderCustomActions = (props) => {
         return <CustomActions userID={userID} storage={storage} {...props} />;
@@ -130,6 +106,8 @@ const ChatScreen = ({ route, navigation, db, isConnected, storage }) => {
         return null;
     }
 
+
+
     return (
         <View style={[styles.container, { backgroundColor: backgroundColor }]}>
             <GiftedChat
@@ -141,19 +119,18 @@ const ChatScreen = ({ route, navigation, db, isConnected, storage }) => {
                 renderCustomView={renderCustomView}
                 user={{
                     _id: userID,
-                    name: name
+                    name
                 }}
             />
             {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
-
         </View>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-    },
+        flex: 1
+    }
 });
 
-export default ChatScreen;
+export default Chat;

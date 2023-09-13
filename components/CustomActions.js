@@ -1,10 +1,12 @@
-import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
-import { useActionSheet } from '@expo/react-native-action-sheet';
-import * as Location from 'expo-location';
+import { TouchableOpacity, View, Text, StyleSheet, Alert } from "react-native";
 import * as ImagePicker from 'expo-image-picker';
+import * as Location from 'expo-location';
+import { useActionSheet } from '@expo/react-native-action-sheet';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
+const CustomActions = ({ wrapperStyle, iconTextStyle, storage, onSend, userID }) => {
     const actionSheet = useActionSheet();
+
     const onActionPress = () => {
         const options = ['Choose From Library', 'Take Picture', 'Send Location', 'Cancel'];
         const cancelButtonIndex = options.length - 1;
@@ -19,7 +21,7 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
                         pickImage();
                         return;
                     case 1:
-                        takePhoto();
+                        takePhoto()
                         return;
                     case 2:
                         getLocation();
@@ -33,9 +35,8 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
         let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (permissions?.granted) {
             let result = await ImagePicker.launchImageLibraryAsync();
-            if (!result.canceled) {
-                console.log('uploading and uploading the image occurs here');
-            } else Alert.alert("Permissions haven't been granted.");
+            if (!result.canceled) await uploadAndSendImage(result.assets[0].uri);
+            else Alert.alert("Permissions haven't been granted.");
         }
     }
 
@@ -43,9 +44,8 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
         let permissions = await ImagePicker.requestCameraPermissionsAsync();
         if (permissions?.granted) {
             let result = await ImagePicker.launchCameraAsync();
-            if (!result.canceled) {
-                console.log('uploading and uploading the image occurs here');
-            } else Alert.alert("Permissions haven't been granted.");
+            if (!result.canceled) await uploadAndSendImage(result.assets[0].uri);
+            else Alert.alert("Permissions haven't been granted.");
         }
     }
 
@@ -62,8 +62,49 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
                 });
             } else Alert.alert("Error occurred while fetching location");
         } else Alert.alert("Permissions haven't been granted.");
+    }
+
+    const generateReference = (uri) => {
+        // this will get the file name from the uri
+        const imageName = uri.split("/")[uri.split("/").length - 1];
+        const timeStamp = (new Date()).getTime();
+        return `${userID}-${timeStamp}-${imageName}`;
+    }
+
+
+    //XHR required as react native no longer supports the fetch() in the blob conversion
+    const convertFileToBlob = async (uri) => {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                resolve(xhr.response);
+            };
+            xhr.onerror = function (error) {
+                reject(new Error('XHR request failed'));
+            };
+            xhr.responseType = 'blob';
+
+            xhr.open('GET', uri, true);
+            xhr.send();
+        });
     };
 
+    //for both takePic and pickImage
+    const uploadAndSendImage = async (imageURI) => {
+        //to call the generateRef function on the uri
+        const uniqueRefString = generateReference(imageURI);
+        // location and name in storage
+        const newUploadRef = ref(storage, uniqueRefString);
+        //convert into blob (binary large object)
+        const blob = await convertFileToBlob(imageURI);
+        // upload it and get a url for download
+        uploadBytes(newUploadRef, blob).then(async (snapshot) => {
+            console.log('File uploaded sucessfully');
+            const imageURL = await getDownloadURL(snapshot.ref);
+            //using the image prop of msg obj, send image
+            onSend({ image: imageURL });
+        });
+    };
 
     return (
         <TouchableOpacity style={styles.container} onPress={onActionPress}>
@@ -73,7 +114,6 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend }) => {
         </TouchableOpacity>
     );
 }
-
 
 const styles = StyleSheet.create({
     container: {
@@ -91,12 +131,10 @@ const styles = StyleSheet.create({
     iconText: {
         color: '#b2b2b2',
         fontWeight: 'bold',
-        fontSize: 10,
+        fontSize: 16,
         backgroundColor: 'transparent',
         textAlign: 'center',
     },
 });
-
-
 
 export default CustomActions;

@@ -24,7 +24,7 @@ const StartScreen = ({ navigation, db }) => {
             <View style={styles.container}>
                 {/* Rendering the title of the App \*/}
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>App Title</Text>
+                    <Text style={styles.title}>Chat App</Text>
                 </View>
                 {/* Rendering the Menu \*/}
                 <View style={styles.menu}>
