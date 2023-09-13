@@ -4,9 +4,7 @@ This README provides an overview of the mobile chat app project developed using 
 location. 
 
 <img width="200" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 26 21" src="img/Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11.26.21.png">
-
 <img width="200" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 35" src="img/Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11.24.35.png">
-
 <img width="200" alt="Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11 24 59" src="img/Simulator Screenshot - iPhone SE (3rd generation) - 2023-09-13 at 11.24.59.png">
 
 ## Introduction
